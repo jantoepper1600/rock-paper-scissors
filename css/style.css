@@ -544,7 +544,7 @@ div.rules > button {
         font-size: 1.5rem;
     }
 
-    main > div:(.normalMode, .advancedMode) {
+    main > div:is(.normalMode, .advancedMode) {
         max-width: 25rem;
     }
 
