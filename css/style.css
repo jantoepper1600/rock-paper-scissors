@@ -1,0 +1,585 @@
+@font-face {
+    font-family: 'Barlow Semi Condensed';
+    font-weight: 600;
+    src: local('Barlow Semi Condensed'), url('/assets/fonts/BarlowSemiCondensed-SemiBold.ttf');
+}
+
+@font-face {
+    font-family: 'Barlow Semi Condensed';
+    font-weight: 700;
+    src: local('Barlow Semi Condensed'), url('/assets/fonts/BarlowSemiCondensed-Bold.ttf');
+}
+
+:root {
+    --scissors-gradient: linear-gradient(90deg, hsl(39, 89%, 49%), hsl(40, 84%, 53%));
+    --paper-gradient: linear-gradient(90deg, hsl(230, 89%, 62%), hsl(230, 89%, 65%));
+    --rock-gradient: linear-gradient(90deg, hsl(349, 71%, 52%), hsl(349, 70%, 56%));
+    --lizard-gradient: linear-gradient(90deg, hsl(261, 73%, 60%), hsl(261, 72%, 63%));
+    --cyan-gradient: linear-gradient(90deg, hsl(189, 59%, 53%), hsl(189, 58%, 57%));
+    --radial-background: radial-gradient(hsl(214, 47%, 23%), hsl(237, 49%, 15%));
+
+    --dark-text: hsl(229, 25%, 31%);
+    --score-text: hsl(229, 64%, 46%);
+    --header-outline: hsl(217, 16%, 45%);
+}
+
+
+
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    color: #fff;
+    font: 600 1rem/1.5 'Barlow Semi Condensed';
+}
+
+body {
+    padding: 2.5rem 1rem;
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    background: var(--radial-background);
+}
+
+body > * {
+    margin-inline: auto;
+    width: 80%;
+}
+
+
+
+
+
+body > header {
+    padding: .75rem;
+    min-height: 6.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: .2rem solid var(--header-outline);
+    border-radius: .5rem;
+}
+
+header > h1 {
+    padding-left: .75rem;
+    width: 0;
+    display: none;
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: .825;
+}
+
+header > h1.active {
+    display: block;
+}
+
+header > div {
+    padding: 1rem;
+    height: 5rem;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    background: #fff;
+    border-radius: .25rem;
+}
+
+header > div > h2 {
+    color: var(--score-text);
+    font-size: .7rem;
+    letter-spacing: 1px;
+}
+
+header > div > p {
+    color: var(--dark-text);
+    font-size: 2.5rem;
+    line-height: .825;
+}
+
+
+
+
+
+body > main {
+    display: grid;
+    place-items: center;
+}
+
+main > div {
+    max-width: 22.5rem;
+    width: 100%;
+    height: 0%;
+    aspect-ratio: 1;
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    isolation: isolate;
+}
+
+main > div.active {
+    height: 90%;
+    position: relative;
+    opacity: 1;
+    pointer-events: all;
+    transition: opacity .5s;
+}
+
+main > div.advancedMode.active {
+    height: 95%;
+}
+
+div.battle.active {
+    height: 100%;
+}
+
+
+
+
+
+div:is(.normalMode, .advancedMode, .battle > div.battleButtons > div > div) > button {
+    width: 7.75rem;
+    aspect-ratio: 1;
+    position: absolute;
+    inset: calc(50% - 3.875rem);
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+}
+
+div:is(.normalMode, .advancedMode, .battle > div.battleButtons > div > div) > button::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: .35rem 0 0;
+    z-index: -1;
+    background: inherit;
+    border-radius: 50%;
+    filter: brightness(.5) saturate(2);
+}
+
+div:is(.normalMode, .advancedMode) > button:hover {
+    translate: 0 .25rem;
+}
+
+div:is(.normalMode, .advancedMode) > button:hover::after {
+    display: none;
+}
+
+div:is(.normalMode, .advancedMode) > button * {
+    pointer-events: none;
+}
+
+div:is(.normalMode, .advancedMode, .battle > div.battleButtons > div > div) > button > div {
+    width: 76.25%;
+    aspect-ratio: 1;
+    position: relative;
+    display: grid;
+    place-items: center;
+    background: #ccc;
+    border-radius: 50%;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+div:is(.normalMode, .advancedMode, .battle > div.battleButtons > div > div) > button > div > img {
+    z-index: 1;
+}
+
+div:is(.normalMode, .advancedMode, .battle > div.battleButtons > div > div) > button > div::before {
+    content: '';
+    position: absolute;
+    inset: .5rem 0 0;
+    background: #fff;
+    border-radius: 50%;
+    scale: 1.1;
+}
+
+@keyframes paperButton {
+    100% {
+        inset: 0 auto auto 0;
+    }
+}
+
+div.normalMode > button.paperButton {
+    background: var(--paper-gradient);
+    animation: paperButton .25s forwards;
+}
+
+@keyframes scissorsButton {
+    100% {
+        inset: 0 0 auto auto;
+    }
+}
+
+div.normalMode > button.scissorsButton {
+    background: var(--scissors-gradient);
+    animation: scissorsButton .25s forwards;
+}
+
+@keyframes rockButton {
+    100% {
+        inset: auto 0 0;
+    }
+}
+
+div.normalMode > button.rockButton {
+    margin-inline: auto;
+    background: var(--rock-gradient);
+    animation: rockButton .25s forwards;
+}
+
+div:is(.normalMode, .advancedMode) > hr {
+    width: 0;
+    height: 1rem;
+    position: absolute;
+    z-index: -2;
+    background: hsla(237, 49%, 15%, 50%);
+}
+
+@keyframes hrLines {
+    100% {
+        width: 60%;
+    }
+}
+
+div.normalMode.active > hr {
+    animation: hrLines .625s .125s forwards;
+}
+
+div.normalMode > hr.linePaperScissors {
+    margin-inline: auto;
+    inset: 3.25rem 0 auto;
+}
+
+div.normalMode > hr.lineScissorsRock {
+    inset: auto 50% 3.25rem;
+    transform-origin: 0;
+    rotate: -57.5deg;
+}
+
+div.normalMode > hr.lineRockPaper {
+    inset: auto 50% 3.25rem;
+    transform-origin: 0;
+    rotate: 237.5deg;
+}
+
+
+
+
+
+div.advancedMode > button {
+    width: 6rem;
+}
+
+div.advancedMode > button > div::before {
+    inset: .15rem 0 0;
+    scale: 1;
+}
+
+@keyframes advancedScissorsButton {
+    100% {
+        inset: 0 0 auto;
+    }
+}
+
+div.advancedMode > button.scissorsButton {
+    margin-inline: auto;
+    background: var(--scissors-gradient);
+    animation: advancedScissorsButton .25s forwards;
+}
+
+@keyframes advancedPaperButton {
+    100% {
+        inset: 27.5% 0 auto auto;
+    }
+}
+
+div.advancedMode > button.paperButton {
+    background: var(--paper-gradient);
+    animation: advancedPaperButton .25s forwards;
+}
+
+@keyframes advancedRockButton {
+    100% {
+        inset: auto 15% 0 auto;
+    }
+}
+
+div.advancedMode > button.rockButton {
+    background: var(--rock-gradient);
+    animation: advancedRockButton .25s forwards;
+}
+
+@keyframes advancedLizardButton {
+    100% {
+        inset: auto auto 0 15%;
+    }
+}
+
+div.advancedMode > button.lizardButton {
+    background: var(--lizard-gradient);
+    animation: advancedLizardButton .25s forwards;
+}
+
+@keyframes advancedSpockButton {
+    100% {
+        inset: 27.5% auto auto 0;
+    }
+}
+
+div.advancedMode > button.spockButton {
+    background: var(--cyan-gradient);
+    animation: advancedSpockButton .25s forwards;
+}
+
+@keyframes advancedHrLines {
+    100% {
+        width: 50%;
+    }
+}
+
+div.advancedMode.active > hr {
+    animation: advancedHrLines .625s .125s forwards;
+}
+
+div.advancedMode > hr.lineScissorsPaper {
+    inset: calc(27.5% + 2.5rem) 2.5rem auto auto;
+    transform-origin: 95%;
+    rotate: 35deg;
+}
+
+div.advancedMode > hr.linePaperRock {
+    inset: auto calc(15% + 2.5rem) 2.5rem auto;
+    transform-origin: 95%;
+    rotate: 110deg;
+}
+
+div.advancedMode > hr.lineRockLizard {
+    margin-inline: auto;
+    inset: auto 0 2.5rem;
+}
+
+div.advancedMode > hr.lineLizardSpock {
+    inset: auto auto 2.5rem calc(15% + 2.5rem);
+    transform-origin: 5%;
+    rotate: -110deg;
+}
+
+div.advancedMode > hr.lineSpockScissors {
+    inset: calc(27.5% + 2.5rem) auto auto 2.5rem;
+    transform-origin: 5%;
+    rotate: -35deg;
+}
+
+
+
+
+
+div.battle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    translate: 0 1rem;
+}
+
+div.battle.active {
+    translate: 0;
+}
+
+div.battle > div.battleButtons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+div.battleButtons > div {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+div.battleButtons > div > div {
+    width: 7.75rem;
+    aspect-ratio: 1;
+    position: relative;
+    background: hsla(237, 49%, 15%, 50%);
+    border-radius: 50%;
+}
+
+div.battleButtons > div > p {
+    text-align: center;
+}
+
+main > div.battle > div.battleButtons > div > div > button {
+    width: 100%;
+    inset: 0;
+}
+
+div.battleButtons > div > div > button#housePickedButton {
+    display: none;
+}
+
+div.battleButtons > div > div > button#housePickedButton.active {
+    display: grid;
+}
+
+div.battle > div.result {
+    display: grid;
+    gap: .5rem;
+    opacity: 0;
+    pointer-events: none;
+}
+
+div.battle > div.result.active {
+    opacity: 1;
+    pointer-events: all;
+    transition: opacity .5s;
+}
+
+div.battle > div.result > p {
+    font-size: 3rem;
+    text-align: center;
+}
+
+div.battle > div.result > button {
+    padding: .5rem 3.5rem;
+    background: #fff;
+    color: var(--dark-text);
+    font-size: 1.1rem;
+    border-radius: .5rem;
+}
+
+
+
+
+
+body > footer {
+    height: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+body > footer > button.deactive {
+    pointer-events: none;
+}
+
+footer > button {
+    padding: .425rem 2.25rem;
+    background: transparent;
+    border: 2px solid #fff;
+    border-radius: .5rem;
+    font-size: .95rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+
+
+
+
+body > div.rules {
+    padding: 5.5rem 1rem 4.25rem;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    inset: 100% 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    transition: top .325s;
+}
+
+body > div.rules.active {
+    top: 0;
+}
+
+div.rules > h2 {
+    color: var(--dark-text);
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+div.rules > img {
+    max-height: 25rem;
+    display: none;
+    object-fit: contain;
+}
+
+div.rules > img.active {
+    display: block;
+}
+
+div.rules > button {
+    aspect-ratio: 1;
+    background: transparent;
+}
+
+
+
+
+
+@media (min-width: 50rem) {
+
+    main > div.normalMode {
+        max-width: 25rem;
+    }
+
+    div.normalMode > button {
+        width: 9rem!important;
+    }
+
+    main > div.advancedMode {
+        max-width: 27.5rem;
+    }
+
+    main > div.advancedMode > button {
+        width: 7.5rem!important;
+    }
+
+    main > div.battle {
+        max-width: 50rem;
+        aspect-ratio: unset;
+    }
+
+    div.battle > div.result {
+        margin: auto;
+        width: max-content;
+        height: max-content;
+        position: absolute;
+        inset: 0;
+    }
+
+    div.battleButtons > div {
+        flex-direction: column-reverse;
+        gap: 2rem;
+    }
+
+    div.battleButtons > div > div {
+        width: 15rem;
+    }
+
+    div.battleButtons > div > p {
+        font-size: 1.5rem;
+    }
+
+    body > footer {
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+}

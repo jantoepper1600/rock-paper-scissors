@@ -2,36 +2,117 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
   
   <title>Frontend Mentor | Rock, Paper, Scissors</title>
 
-  Score
-  Rules
-
-  You Picked
-  The House Picked
-
-  You Win
-  You Lose
-
-  Play Again
-
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
+  <link rel="stylesheet" type="text/css" href="./css/style.css">
+  <script type="text/javascript" src="js/main.js" defer></script>
 </head>
 <body>
-
-
-  
-  <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
+  <header>
+    <h1 class="active">ROCK PAPER SCISSORS</h1>
+    <h1>ROCK PAPER SCISSORS LIZARD SPOCK</h1>
+    <div>
+      <h2>SCORE</h2>
+      <p id="score">0</p>
+    </div>
+  </header>
+  <main>
+    <div class="normalMode active">
+      <button class="paperButton" onclick="selectedButton(event)" value="Paper">
+        <div>
+          <img src="./assets/images/icon-paper.svg" alt="Paper" width="45%" height="auto">
+        </div>
+      </button>
+      <hr class="linePaperScissors">
+      <button class="scissorsButton" onclick="selectedButton(event)" value="Scissors">
+        <div>
+          <img src="./assets/images/icon-scissors.svg" alt="Scissors" width="45%" height="auto">
+        </div>
+      </button>
+      <hr class="lineScissorsRock">
+      <button class="rockButton" onclick="selectedButton(event)" value="Rock">
+        <div>
+          <img src="./assets/images/icon-rock.svg" alt="Rock" width="45%" height="auto">
+        </div>
+      </button>
+      <hr class="lineRockPaper">
+    </div>
+    <div class="advancedMode">
+      <button class="scissorsButton" onclick="selectedButton(event)" value="Scissors">
+        <div>
+          <img src="./assets/images/icon-scissors.svg" alt="Scissors" width="45%" height="auto">
+        </div>
+      </button>
+      <hr class="lineScissorsPaper">
+      <button class="paperButton" onclick="selectedButton(event)" value="Paper">
+        <div>
+          <img src="./assets/images/icon-paper.svg" alt="Paper" width="45%" height="auto">
+        </div>
+      </button>
+      <hr class="linePaperRock">
+      <button class="rockButton" onclick="selectedButton(event)" value="Rock">
+        <div>
+          <img src="./assets/images/icon-rock.svg" alt="Rock" width="45%" height="auto">
+        </div>
+      </button>
+      <hr class="lineRockLizard">
+      <button class="lizardButton" onclick="selectedButton(event)" value="Lizard">
+        <div>
+          <img src="./assets/images/icon-lizard.svg" alt="Lizard" width="45%" height="auto">
+        </div>
+      </button>
+      <hr class="lineLizardSpock">
+      <button class="spockButton" onclick="selectedButton(event)" value="Spock">
+        <div>
+          <img src="./assets/images/icon-spock.svg" alt="Spock" width="45%" height="auto">
+        </div>
+      </button>
+      <hr class="lineSpockScissors">
+    </div>
+    <div class="battle">
+      <div class="battleButtons">
+        <div>
+          <div>
+            <button id="pickedButton">
+              <div>
+                <img src="" alt="Picked Button" width="45%" height="auto">
+              </div>
+            </button>
+          </div>
+          <p>YOU PICKED</p>
+        </div>
+        <div>
+          <div>
+            <button id="housePickedButton">
+              <div>
+                <img src="" alt="House Picked Button" width="45%" height="auto">
+              </div>
+            </button>
+          </div>
+          <p>THE HOUSE PICKED</p>
+        </div>
+      </div>
+      <div class="result">
+        <p id="result"></p>
+        <button onclick="playAgain()">PLAY AGAIN</button>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <button id="switchButton" onclick="switchMode()">SWITCH MODE</button>
+    <button onclick="toggleRules()">RULES</button>
+  </footer>
+  <div id="rules" class="rules">
+    <h2>RULES</h2>
+    <img id="normalModeRules" class="active" src="./assets/images/image-rules.svg" alt="Rules" width="80%" height="auto">
+    <img id="advancedModeRules" src="./assets/images/image-rules-bonus.svg" alt="Rules" width="80%" height="auto">
+    <button onclick="toggleRules()">
+      <img src="./assets/images/icon-close.svg" alt="Close Rules" width="100%" height="100%">
+    </button>
   </div>
 </body>
 </html>
